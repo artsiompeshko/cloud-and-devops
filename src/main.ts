@@ -9,6 +9,10 @@ function loadEnvVariables() {
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+
+  // Starts listening for shutdown hooks
+  app.enableShutdownHooks();
+
   await app.listen(process.env.APP_PORT || 3000);
 
   console.info(`Hosting the app on ${process.env.APP_PORT || 3000} port`);
