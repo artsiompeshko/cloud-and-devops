@@ -29,6 +29,7 @@ checkIfFileExists() {
   fi
 }
 
+# cheks if user entered valid command
 checkIfValidCommand() {
   local e match="$1"
   shift
@@ -36,6 +37,7 @@ checkIfValidCommand() {
   return 1
 }
 
+# read users command and validate it
 readCommandAndValidate() {
   checkIfValidCommand $1 "${commands[@]}"
   if [[ $? -eq 0 ]]
@@ -48,6 +50,7 @@ readCommandAndValidate() {
   fi
 }
 
+# validate passed argument to be alphabetic
 validateInput() {
   input=$1
   if [[ "${input}" =~ [^a-zA-Z] ]]
@@ -60,6 +63,7 @@ validateInput() {
   fi
 }
 
+# adds new row to the users.db
 executeAddCommand() {
   read -p "Please, enter username: " username
   validateInput $username
@@ -69,6 +73,7 @@ executeAddCommand() {
   echo "$username , $role" >> $FILE
 }
 
+# prints help
 executeHelp() {
   echo "
   usage: db.sh [command]
@@ -82,11 +87,13 @@ executeHelp() {
   "
 }
 
+# creates new backup file
 executeBackup() {
   local backupFile="$FILE_PATH/$(date +"%Y%m%d%H%M%S")-users.db.backup"
   cp $FILE $backupFile
 }
 
+# restore latests backup
 executeRestore() {
   local lastBackupFileDate
   local lastBackupFilePath
@@ -108,6 +115,7 @@ executeRestore() {
   cp $lastBackupFilePath $FILE
 }
 
+# prints all requested users
 executeFind() {
   read -p "Please, enter username: " username
   validateInput $username
@@ -133,6 +141,7 @@ executeFind() {
   fi
 }
 
+# prints all rows from users.db with index
 executeList() {
   local N=1
   while IFS= read -r line; do
@@ -141,6 +150,7 @@ executeList() {
   done < $FILE
 }
 
+# executes command passed as function argument
 executeCommand() {
   case $1 in
     add)
