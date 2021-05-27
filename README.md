@@ -1,5 +1,11 @@
 # cloud-and-devops
 
+## Bash scripts
+
+### Zip client
+
+Navigate to the projcet root and run `./scripts/build-client-zip.sh`.
+
 ## Setup and run
 
 ### Local machine
