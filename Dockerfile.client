@@ -1,0 +1,22 @@
+# create intermediate image
+FROM node:15-alpine as BUILD_CLIENT_IMAGE
+# Create app directory
+WORKDIR /app
+
+# Copy client app
+COPY ./client/ ./
+
+# install node dependencies
+RUN npm install
+
+#Build client app
+RUN npm run build
+# remove dev dependencies
+RUN npm prune --production
+
+FROM nginx
+RUN rm /etc/nginx/conf.d/default.conf
+# Copy nginx config
+COPY nginx/nginx.config /etc/nginx/conf.d/default.conf
+# Copy built client app to serve its static
+COPY --from=BUILD_CLIENT_IMAGE /app/dist /usr/share/nginx/html
