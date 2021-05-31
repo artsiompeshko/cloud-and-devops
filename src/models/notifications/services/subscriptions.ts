@@ -18,10 +18,6 @@ async function subscribeIfNeeded(notification: Notification) {
     isAlreadySubscripbed = await isSusbcribed(notification.phone);
   }
 
-  if (isEmailNotification(notification)) {
-    isAlreadySubscripbed = await isSusbcribed(notification.email);
-  }
-
   if (isAlreadySubscripbed) {
     console.log('Reciever is already subscribed. Skipping subscribe actions.');
 
