@@ -10,6 +10,8 @@
     "build": "nest build",
     "build:notifications": "sh ./scripts/build-notifications-lambda.sh",
     "build:client": "sh ./scripts/prepare-client.sh",
+    "ci:client": "sh ./scripts/ci.sh",
+    "install:client": "sh ./scripts/install-client.sh",
     "format": "prettier --write \"src/**/*.ts\" \"test/**/*.ts\"",
     "serve:prod": "sh ./scripts/serve.sh",
     "start": "nest start",
