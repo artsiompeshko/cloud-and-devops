@@ -9,6 +9,7 @@ import {
   Param,
   Put,
   Delete,
+  HttpService,
 } from '@nestjs/common';
 import { Response } from 'express';
 
@@ -48,6 +49,21 @@ export class QuotesController {
     } catch (e) {
       res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
         message: `Unable to get random quote: ${
+          e.response?.data?.message || e.message
+        }`,
+      });
+    }
+  }
+
+  @Post('/share')
+  async share(@Res() res: Response, @Body() shareDto: ShareDto) {
+    try {
+      await this.quotesService.share(shareDto);
+
+      res.status(HttpStatus.OK).end();
+    } catch (e) {
+      res.status(HttpStatus.INTERNAL_SERVER_ERROR).json({
+        message: `Unable to share the quote: ${
           e.response?.data?.message || e.message
         }`,
       });

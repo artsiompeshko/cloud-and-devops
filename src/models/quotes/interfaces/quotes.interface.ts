@@ -11,3 +11,9 @@ interface Quote {
 }
 
 type QuoteDto = Omit<Quote, 'id'>;
+
+interface ShareDto {
+  phone?: string;
+  email?: string;
+  quote: Quote;
+}

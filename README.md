@@ -16,3 +16,10 @@ In order to run the application in production mode, please run `npm run serve:pr
 
 In order to run the application, please install docker and docker-compose on your machine:
 `docker-compose up --build`
+
+### building lambda
+
+To build the lambda code:
+`npm run build:notifications`
+
+Then output will be in ./src/models/notifications/dist/bundle.js and can be manually deployed in AWS.

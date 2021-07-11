@@ -1,4 +1,5 @@
-import { Injectable } from '@nestjs/common';
+import { Injectable, HttpService } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
 
 import { v4 as uuidv4 } from 'uuid';
 
@@ -8,7 +9,10 @@ import { quotes as initialQuotes } from './quotes';
 export class QuotesService {
   quotes: Quote[];
 
-  constructor() {
+  constructor(
+    private readonly configService: ConfigService,
+    private readonly httpService: HttpService,
+  ) {
     this.quotes = initialQuotes;
   }
 
@@ -29,6 +33,12 @@ export class QuotesService {
     this.quotes.push(quote);
 
     return quote;
+  }
+
+  async share(shareDto: ShareDto): Promise<void> {
+    await this.httpService
+      .post(this.configService.get<string>('SHARE_ENDPOINT'), shareDto)
+      .toPromise();
   }
 
   async getRandom(tag?: string): Promise<Quote> {
